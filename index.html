@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Band Button Order Form</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for longer forms */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px; /* Wider for more fields */
+            text-align: left; /* Align text left for form fields */
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151; /* Darker gray for labels */
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db; /* Light gray border */
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            color: #1f2937; /* Dark text */
+        }
+        input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .student-entry {
+            border: 1px dashed #d1d5db;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            background-color: #f9fafb; /* Very light gray */
+        }
+        .remove-student-btn {
+            background-color: #ef4444; /* Red */
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            transition: background-color 0.2s ease;
+        }
+        .remove-student-btn:hover {
+            background-color: #dc2626; /* Darker red */
+        }
+        .add-student-btn {
+            background-color: #4f46e5; /* Indigo */
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 16px;
+            margin-bottom: 24px;
+            transition: background-color 0.2s ease;
+        }
+        .add-student-btn:hover {
+            background-color: #4338ca; /* Darker indigo */
+        }
+        button[type="submit"] {
+            background-color: #22c55e; /* Green */
+            color: white;
+            padding: 14px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.2s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #16a34a; /* Darker green */
+        }
+        .message-box {
+            background-color: #d1fae5; /* Light green for success */
+            color: #065f46; /* Dark green text */
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 500;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+        .message-box.error {
+            background-color: #fee2e2; /* Light red for error */
+            color: #991b1b; /* Dark red text */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Band Button Order Form</h1>
+        <p class="text-gray-600 mb-8 text-center">Each button costs <span class="font-semibold text-indigo-600">$5.00</span>.</p>
+        <!-- Button Example Image -->
+        <div class="mb-8 text-center">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Button Example:</h2>
+            <img
+                src="https://placehold.co/200x200/4f46e5/ffffff?text=Band+Button"
+                alt="Example of a band button"
+                class="mx-auto rounded-full shadow-lg border-4 border-indigo-300"
+                onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/000000?text=Image+Not+Found';"
+            >
+            <p class="text-sm text-gray-500 mt-2">Your student's instrument and name will be featured!</p>
+        </div>
+        <form id="bandOrderForm" class="space-y-4" method="post">
+            <!-- Parent/Guardian Information -->
+            <div>
+                <label for="parentName">Parent/Guardian Name:</label>
+                <input type="text" id="parentName" name="parentName" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <!-- Student Information Section -->
+            <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4 border-b pb-2">Student Information</h2>
+            <div id="studentsContainer">
+                <!-- Initial student entry -->
+                <div class="student-entry" data-student-id="1">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">Student 1</h3>
+                    <label for="studentName_1">Student Name:</label>
+                    <input type="text" id="studentName_1" name="studentName_1" required>
+                    <label for="instrument_1">Instrument:</label>
+                    <input type="text" id="instrument_1" name="instrument_1" required>
+                    <label for="numButtons_1">Number of Buttons for Student 1:</label>
+                    <input type="number" id="numButtons_1" name="numButtons_1" min="0" value="0" oninput="calculateTotal()" required>
+                </div>
+            </div>
+            <button type="button" id="addStudentBtn" class="add-student-btn">Add Another Student</button>
+            <!-- Total Calculation -->
+            <div class="bg-indigo-100 p-6 rounded-lg border-2 border-indigo-300 mt-8">
+                <p class="text-xl text-indigo-800 font-semibold mb-2 text-center">Total Cost for All Buttons:</p>
+                <p id="totalCost" class="text-5xl font-extrabold text-indigo-700 text-center">$0.00</p>
+                <!-- Hidden input to send total cost to Google Sheet -->
+                <input type="hidden" id="hiddenTotalCost" name="totalCost" value="0.00">
+            </div>
+            <button type="submit" class="mt-8">Submit Order</button>
+        </form>
+        <div id="messageBox" class="message-box"></div>
+    </div>
+    <script>
+        // Define the price per button
+        const PRICE_PER_BUTTON = 5;
+        let studentCounter = 1; // To keep track of student IDs
+        /**
+         * Calculates the total cost based on the number of buttons for all students.
+         * Updates the displayed total cost and the hidden input field.
+         */
+        function calculateTotal() {
+            let overallTotal = 0;
+            // Select all number of buttons inputs
+            const numButtonsInputs = document.querySelectorAll('input[name^="numButtons_"]');
+            numButtonsInputs.forEach(input => {
+                const numberOfButtons = parseInt(input.value) || 0;
+                if (numberOfButtons < 0) {
+                    input.value = 0; // Reset input to 0 if negative
+                }
+                overallTotal += (parseInt(input.value) || 0) * PRICE_PER_BUTTON;
+            });
+            // Update the display with the formatted total cost
+            document.getElementById('totalCost').textContent = `$${overallTotal.toFixed(2)}`;
+            // Update the hidden input field for submission
+            document.getElementById('hiddenTotalCost').value = overallTotal.toFixed(2);
+        }
+        /**
+         * Adds a new student entry section to the form.
+         */
+        document.getElementById('addStudentBtn').addEventListener('click', () => {
+            studentCounter++;
+            const studentsContainer = document.getElementById('studentsContainer');
+            const newStudentEntry = document.createElement('div');
+            newStudentEntry.classList.add('student-entry');
+            newStudentEntry.setAttribute('data-student-id', studentCounter);
+            newStudentEntry.innerHTML = `
+                <h3 class="text-lg font-medium text-gray-700 mb-2">Student ${studentCounter}</h3>
+                <label for="studentName_${studentCounter}">Student Name:</label>
+                <input type="text" id="studentName_${studentCounter}" name="studentName_${studentCounter}" required>
+                <label for="instrument_${studentCounter}">Instrument:</label>
+                <input type="text" id="instrument_${studentCounter}" name="instrument_${studentCounter}" required>
+                <label for="numButtons_${studentCounter}">Number of Buttons for Student ${studentCounter}:</label>
+                <input type="number" id="numButtons_${studentCounter}" name="numButtons_${studentCounter}" min="0" value="0" oninput="calculateTotal()" required>
+                <button type="button" class="remove-student-btn" onclick="removeStudent(this)">Remove Student</button>
+            `;
+            studentsContainer.appendChild(newStudentEntry);
+            calculateTotal(); // Recalculate total after adding new student
+        });
+        /**
+         * Removes a student entry section from the form.
+         * @param {HTMLElement} button - The remove button clicked.
+         */
+        function removeStudent(button) {
+            const studentEntry = button.closest('.student-entry');
+            if (studentEntry) {
+                studentEntry.remove();
+                calculateTotal(); // Recalculate total after removing student
+            }
+        }
+        /**
+         * Displays a message in the message box.
+         * @param {string} message - The message to display.
+         * @param {boolean} isError - True if it's an error message, false for success.
+         */
+        function showMessage(message, isError = false) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            messageBox.classList.toggle('error', isError);
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 5000);
+        }
+        // Handle form submission
+        document.getElementById('bandOrderForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = {};
+            // Collect all form data, including dynamically added student fields
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            // Manually collect student data into a structured array
+            const students = [];
+            document.querySelectorAll('.student-entry').forEach((entry, index) => {
+                const studentId = entry.getAttribute('data-student-id');
+                const studentData = {
+                    name: document.getElementById(`studentName_${studentId}`).value,
+                    instrument: document.getElementById(`instrument_${studentId}`).value,
+                    numButtons: document.getElementById(`numButtons_${studentId}`).value
+                };
+                students.push(studentData);
+            });
+            data['students'] = JSON.stringify(students); // Stringify to send as a single field
+            // Replace with your deployed Google Apps Script Web App URL
+            // IMPORTANT: You will get this URL after deploying your Google Apps Script (see instructions below)
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzMkOVGBMBBLTMTcMzl4pqernke51LyN6yLMyafab-lS0-Ex1ndKYL4v7jyjdGIgl-j9A/exec'; // <<< IMPORTANT: REPLACE THIS!
+            if (SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                showMessage('Please deploy your Google Apps Script and replace SCRIPT_URL with its URL.', true);
+                return;
+            }
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Required for Google Apps Script web app POST requests
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams(data).toString()
+                });
+                // Since we use 'no-cors', we can't directly read the response status/body.
+                // Assume success if no network error.
+                showMessage('Order submitted successfully! Thank you.');
+                form.reset(); // Clear the form
+                // Reset student entries to just one
+                document.getElementById('studentsContainer').innerHTML = `
+                    <div class="student-entry" data-student-id="1">
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Student 1</h3>
+                        <label for="studentName_1">Student Name:</label>
+                        <input type="text" id="studentName_1" name="studentName_1" required>
+                        <label for="instrument_1">Instrument:</label>
+                        <input type="text" id="instrument_1" name="instrument_1" required>
+                        <label for="numButtons_1">Number of Buttons for Student 1:</label>
+                        <input type="number" id="numButtons_1" name="numButtons_1" min="0" value="0" oninput="calculateTotal()" required>
+                    </div>
+                `;
+                studentCounter = 1; // Reset counter
+                calculateTotal(); // Recalculate total after reset
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showMessage('There was an error submitting your order. Please try again.', true);
+            }
+        });
+        // Initialize total calculation on page load
+        window.onload = calculateTotal;
+    </script>
+</body>
+</html>
