@@ -133,7 +133,6 @@
                 class="mx-auto rounded-full shadow-lg border-4 border-indigo-300 w-48 h-48 object-cover"
                 onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/000000?text=Image+Not+Found';"
             >
-            <p class="text-sm text-gray-500 mt-2">Your student's instrument and name will be featured!</p>
         </div>
 
         <form id="bandOrderForm" class="space-y-4">
@@ -191,12 +190,9 @@
         const PRICE_PER_BUTTON = 5;
         let studentCounter = 1; // To keep track of student IDs
 
-        // IMPORTANT: Replace this with your desired payment URL (e.g., Venmo, PayPal.me, etc.)
-        // You can often append the total amount to the URL for services like PayPal.me.
-        // Example for PayPal.me: 'https://paypal.me/yourusername/'
-        // The amount will be appended like: 'https://paypal.me/yourusername/25.00'
-        const BASE_PAYMENT_REDIRECT_URL = 'https://example.com/your-payment-link'; // <<< REPLACE THIS!
-        // Example: 'https://venmo.com/yourusername' or 'https://paypal.me/yourusername'
+        // IMPORTANT: Replace 'yourVenmoUsername' with your actual Venmo username.
+        // Venmo typically does NOT support pre-filling the amount in the URL.
+        const BASE_PAYMENT_REDIRECT_URL = 'https://venmo.com/April-Fleischman'; // <<< REPLACE THIS!
 
         /**
          * Calculates the total cost based on the number of buttons for all students.
@@ -365,7 +361,7 @@
 
                 // Since we use 'no-cors', we can't directly read the response status/body.
                 // Assume success if no network error.
-                showMessage('Order submitted successfully! You will be redirected to the payment page shortly.');
+                showMessage('Order submitted successfully! You will be redirected to Venmo for payment shortly.'); // Updated message
                 form.reset(); // Clear the form
                 // Reset student entries to just one
                 document.getElementById('studentsContainer').innerHTML = `
@@ -387,15 +383,15 @@
                 // Redirect to payment page after a short delay
                 setTimeout(() => {
                     let finalPaymentUrl = BASE_PAYMENT_REDIRECT_URL;
-                    // Append total amount if the base URL is for PayPal.me (or similar)
-                    if (BASE_PAYMENT_REDIRECT_URL.includes('paypal.me/') && currentTotal > 0) {
-                        finalPaymentUrl += currentTotal.toFixed(2);
-                    }
+                    // Remove the PayPal.me specific logic as we're now targeting Venmo
+                    // if (BASE_PAYMENT_REDIRECT_URL.includes('paypal.me/') && currentTotal > 0) {
+                    //     finalPaymentUrl += currentTotal.toFixed(2);
+                    // }
 
                     if (finalPaymentUrl && finalPaymentUrl !== 'https://example.com/your-payment-link') {
                         window.location.href = finalPaymentUrl;
                     } else {
-                        console.warn('Payment redirect URL not configured or total is zero. Not redirecting.');
+                        console.warn('Payment redirect URL not configured. Not redirecting.');
                     }
                 }, 3000); // Redirect after 3 seconds
 
