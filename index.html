@@ -122,18 +122,18 @@
 <body>
     <div class="container">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Band Button Order Form</h1>
-        <p class="text-gray-600 mb-8 text-center">Each button costs <span class="font-semibold text-indigo-600">$5.00</span>.</p>
+        <p class="text-gray-600 mb-8 text-center">Each button costs <span class="font-semibold text-indigo-600">$5.51</span>.</p>
 
         <!-- Button Example Image -->
         <div class="mb-8 text-center">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Button Example:</h2>
             <img
-                src="https://github.com/Marchmasters/band-button-order-form/blob/main/mockup.jpg"
-                alt="Example of a band button"
+                src="https://raw.githubusercontent.com/Marchmasters/band-button-order-form/main/mockup.jpg"
+                alt="Example band button"
                 class="mx-auto rounded-full shadow-lg border-4 border-indigo-300 w-48 h-48 object-cover"
                 onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/000000?text=Image+Not+Found';"
             >
-            <p class="text-sm text-gray-500 mt-2">Your student's instrument and name will be featured!</p>
+            <p class="text-sm text-gray-500 mt-2">Example Band Button</p>
         </div>
 
         <form id="bandOrderForm" class="space-y-4">
@@ -189,7 +189,7 @@
 
     <script>
         // Define the price per button
-        const PRICE_PER_BUTTON = 5;
+        const PRICE_PER_BUTTON = 5.51;
         let studentCounter = 1; // To keep track of student IDs
 
         // The payment redirect URL has been updated to the provided Square link.
@@ -427,4 +427,3 @@
     </script>
 </body>
 </html>
-
