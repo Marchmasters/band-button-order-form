@@ -192,9 +192,8 @@
         const PRICE_PER_BUTTON = 5;
         let studentCounter = 1; // To keep track of student IDs
 
-        // IMPORTANT: Replace 'yourVenmoUsername' with your actual Venmo username.
-        // Venmo typically does NOT support pre-filling the amount in the URL.
-        const BASE_PAYMENT_REDIRECT_URL = 'https://venmo.com/yourVenmoUsername'; // <<< REPLACE THIS!
+        // The payment redirect URL has been updated to the provided Square link.
+        const BASE_PAYMENT_REDIRECT_URL = 'https://checkout.square.site/merchant/44QXX4R2B839B/checkout/CIEXIPKW7K3ZZSIV2NP3O2KI';
 
         /**
          * Automatically formats a phone number as ###-###-#### as the user types.
@@ -368,7 +367,7 @@
 
             // Replace with your deployed Google Apps Script Web App URL
             // IMPORTANT: You will get this URL after deploying your Google Apps Script (see instructions below)
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzTBIbRlIHIIveKK-xRSACy4uuL2HtB-uQOE8kgfv6-IBGLikSUnrt-K44aqhIS3q5yQ/exec'; // <<< IMPORTANT: REPLACE THIS!
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUo_A1jaeQRbwAfXSXCAc68c58zRUh7abdZ6WMkCQJIIqVKbM91RPW5exkVzcNhxJX3w/exec'; // <<< IMPORTANT: REPLACE THIS!
 
             if (SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
                 showMessage('Please deploy your Google Apps Script and replace SCRIPT_URL with its URL.', true);
@@ -387,7 +386,7 @@
 
                 // Since we use 'no-cors', we can't directly read the response status/body.
                 // Assume success if no network error.
-                showMessage('Order submitted successfully! You will be redirected to Venmo for payment shortly.'); // Updated message
+                showMessage('Order submitted successfully! You will be redirected to Square for payment shortly.'); // Updated message
                 form.reset(); // Clear the form
                 // Reset student entries to just one
                 document.getElementById('studentsContainer').innerHTML = `
@@ -409,10 +408,6 @@
                 // Redirect to payment page after a short delay
                 setTimeout(() => {
                     let finalPaymentUrl = BASE_PAYMENT_REDIRECT_URL;
-                    // Remove the PayPal.me specific logic as we're now targeting Venmo
-                    // if (BASE_PAYMENT_REDIRECT_URL.includes('paypal.me/') && currentTotal > 0) {
-                    //     finalPaymentUrl += currentTotal.toFixed(2);
-                    // }
 
                     if (finalPaymentUrl && finalPaymentUrl !== 'https://example.com/your-payment-link') {
                         window.location.href = finalPaymentUrl;
