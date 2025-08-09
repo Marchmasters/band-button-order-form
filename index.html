@@ -128,11 +128,12 @@
         <div class="mb-8 text-center">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Button Example:</h2>
             <img
-                src="https://Marchmasters.github.io/band-button-order-form/mockup.jpg"
+                src="https://placehold.co/200x200/4f46e5/ffffff?text=Band+Button"
                 alt="Example of a band button"
                 class="mx-auto rounded-full shadow-lg border-4 border-indigo-300 w-48 h-48 object-cover"
                 onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/000000?text=Image+Not+Found';"
             >
+            <p class="text-sm text-gray-500 mt-2">Your student's instrument and name will be featured!</p>
         </div>
 
         <form id="bandOrderForm" class="space-y-4">
@@ -148,8 +149,9 @@
             </div>
 
             <div>
-                <label for="phone">Phone Number (Format: ###-###-####):</label>
-                <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="e.g., 123-456-7890" required>
+                <label for="phone">Phone Number:</label>
+                <!-- This input now calls a function to automatically format the number -->
+                <input type="tel" id="phone" name="phone" oninput="formatPhoneNumber(this)" maxlength="12" placeholder="e.g., 123-456-7890" required>
             </div>
 
             <!-- Student Information Section -->
@@ -179,7 +181,7 @@
                 <input type="hidden" id="hiddenTotalCost" name="totalCost" value="0.00">
             </div>
 
-            <button type="submit" class="mt-8">Submit Order</button>
+            <button type="submit" class="mt-8">Submit Order and Pay Here</button>
         </form>
 
         <div id="messageBox" class="message-box"></div>
@@ -192,7 +194,31 @@
 
         // IMPORTANT: Replace 'yourVenmoUsername' with your actual Venmo username.
         // Venmo typically does NOT support pre-filling the amount in the URL.
-        const BASE_PAYMENT_REDIRECT_URL = 'https://venmo.com/April-Fleischman'; // <<< REPLACE THIS!
+        const BASE_PAYMENT_REDIRECT_URL = 'https://venmo.com/yourVenmoUsername'; // <<< REPLACE THIS!
+
+        /**
+         * Automatically formats a phone number as ###-###-#### as the user types.
+         * This improves the mobile user experience.
+         * @param {HTMLElement} input - The input field element.
+         */
+        function formatPhoneNumber(input) {
+            // Remove all non-digit characters
+            let numbers = input.value.replace(/\D/g, '');
+            let formattedNumber = '';
+
+            // Apply formatting as the user types
+            if (numbers.length > 0) {
+                formattedNumber += numbers.substring(0, 3);
+            }
+            if (numbers.length >= 4) {
+                formattedNumber += '-' + numbers.substring(3, 6);
+            }
+            if (numbers.length >= 7) {
+                formattedNumber += '-' + numbers.substring(6, 10);
+            }
+
+            input.value = formattedNumber;
+        }
 
         /**
          * Calculates the total cost based on the number of buttons for all students.
@@ -278,13 +304,13 @@
 
             // Client-side validation for phone number format
             const phoneInput = document.getElementById('phone');
-            const phonePattern = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
-            if (!phonePattern.test(phoneInput.value)) {
-                showMessage('Please enter a valid phone number in ###-###-#### format.', true);
+            // Remove non-digits from the phone number for validation
+            const phoneNumber = phoneInput.value.replace(/\D/g, '');
+            if (phoneNumber.length !== 10) {
+                showMessage('Please enter a valid 10-digit phone number.', true);
                 phoneInput.focus();
                 return; // Stop submission
             }
-
 
             const form = event.target;
             const formData = new FormData(form);
@@ -342,7 +368,7 @@
 
             // Replace with your deployed Google Apps Script Web App URL
             // IMPORTANT: You will get this URL after deploying your Google Apps Script (see instructions below)
-            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUo_A1jaeQRbwAfXSXCAc68c58zRUh7abdZ6WMkCQJIIqVKbM91RPW5exkVzcNhxJX3w/exec'; // <<< IMPORTANT: REPLACE THIS!
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzTBIbRlIHIIveKK-xRSACy4uuL2HtB-uQOE8kgfv6-IBGLikSUnrt-K44aqhIS3q5yQ/exec'; // <<< IMPORTANT: REPLACE THIS!
 
             if (SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
                 showMessage('Please deploy your Google Apps Script and replace SCRIPT_URL with its URL.', true);
